@@ -24,8 +24,8 @@
                                     <td width="26">&nbsp;</td>
                                     <td valign="top" height="100" width="100"
                                         style="border-spacing: 0; background-color:{{leftcolorban1}};">
-                                        <img src="{{imagepath}}{{leftban1}}" height="100" width="100" style="z-index:1;position:absolute;">
-                                        <img src="{{imagepath}}{{leftban1over}}" height="100" width="100" style="z-index:2;position:absolute;">
+                                        <img src="{{imagepath}}{{leftban1}}" height="100" width="100" style="z-index:2;position:absolute;">
+                                        <img src="{{imagepath}}{{blueban}}" height="100" width="100" style="z-index:3;position:absolute; display:{{lb1d}};">
                                     </td>
                                     <td width="26">&nbsp;</td>
                                 </tr>
@@ -58,22 +58,25 @@
                     </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td>
-                        <table border="0" cellpadding="1">
+                        <table border="0" cellpadding="0" cellspacing="0" width="600px"  >
 
                                 <tr data-ng-repeat="r in [0,1,2,3,4,5,6,7,8]" >
-                                    <td valign="top" data-ng-repeat="c in [0,1,2,3,4,5]"
-                                        style="border-spacing:0; border-right: 0; background-repeat:no-repeat; border:{{ heroList [r*6 + c].style}};">
+                                    <td valign="top" data-ng-repeat="c in [0,1,2,3,4,5]"  >
+                                        <!--border:{{ heroList [r*6 + c].style}};-->
+                                        <!--
                                         <img src="{{imagepath}}red.gif"
-                                             style="width:100px;height: 100px;z-index: 1; margin-bottom: -103px; margin-left: 0px;"/>
+                                             style="width:100px;height: 100px; z-index: 1; margin-bottom: -103px; margin-left: -1px;"/>-->
                                         <img src="{{imagepath}}{{ heroList[r*6 + c].name | lowercase  }}.gif"
                                              ng-click="pickmeById ( r*6 + c );"
                                              ng-mouseenter = "checkById ( r*6 + c )"
                                              ng-mouseleave = "doneById ( r*6 + c )"
-                                             style="width: 98px; height: 98px;z-index: 2;
-                                                    margin-bottom: -1px; margin-left: 1px;
+                                             style="width: 100px; height: 100px;
+                                                    border:{{ heroList [ r*6 + c ].style}};
                                                     filter:{{ heroList [ r*6 + c ].filter }};
                                             /*        filter: {{heroList[r*5 + c].selected ? 'brightness(20%)' : 'brightness(100%)';}};*/
                                         "/>
+
+
                                     </td>
                                 </tr>
 
@@ -89,7 +92,7 @@
                                 <td valign="top" height="100" width="100"
                                     style="border-spacing: 0; background: url('glory100.png');background-repeat:no-repeat;background-color:{{rightcolorban1}};">
                                     <img src="{{imagepath}}{{rightban1}}" height="100" width="100" style="z-index:1;position:absolute;">
-                                    <img src="{{imagepath}}{{rightban1over}}" height="100" width="100" style="z-index:2;position:absolute;">
+                                    <img src="{{imagepath}}{{redban}}" height="100" width="100" style="z-index:3;position:absolute; display:{{rb1d}};">
                                 </td>
                                 <td width="26">&nbsp;</td>
                             </tr>
@@ -137,9 +140,9 @@
             $scope.filternormal = "brightness(100%)";
             $scope.filterselected = "brightness(20%)";
 
-            $scope.style_badagainst = "1px solid red";
-            $scope.style_goodagainst = "1px solid green";
-            $scope.style_normal = "1px transparent";
+            $scope.style_badagainst = "2px solid red";
+            $scope.style_goodagainst = "2px solid chartreuse";
+            $scope.style_normal = "2px solid transparent";
 
 
 
@@ -206,9 +209,9 @@
             $scope.bluecolor = "rgba(99,209,244, 0.5)";
 
             $scope.leftban1 = "glory100.png";
-            $scope.leftbanover = "";
+            $scope.lb1d = "none";
             $scope.rightban1 = "glory100.png";
-            $scope.rightbanover = "";
+            $scope.rb1d = "none";
 
             $scope.leftpick1 = "glory.png";
             $scope.leftpick2 = "glory.png";
@@ -233,12 +236,12 @@
             $scope.pickme = function (name) {
                 if ($scope.draftstep <= 0) {
                     $scope.leftban1 = name + '.gif';
-                    $scope.leftban1over = $scope.blueban;
+                    $scope.lb1d = "inline";
                     $scope.draftstep = 1;
                     $scope.rightcolorban1 = $scope.redcolor;
                 } else if ($scope.draftstep <= 1) {
                     $scope.rightban1 = name + '.gif';
-                    $scope.rightban1over = $scope.redban;
+                    $scope.rb1d = "inline";
                     $scope.draftstep = 2;
                     $scope.leftcolorpick1 = $scope.bluecolor;
                 } else if ($scope.draftstep <= 2) {
@@ -287,9 +290,9 @@
                 }
 
                 $scope.leftban1 = "glory100.png";
-                $scope.leftban1over = "";
+                $scope.lb1d = "none";
                 $scope.rightban1 = "glory100.png";
-                $scope.rightban1over = "";
+                $scope.rb1d = "none";
 
                 $scope.leftpick1 = "glory.png";
                 $scope.leftpick2 = "glory.png";
@@ -352,7 +355,7 @@
                     for (var x = 0; x < goodList.length; x++) {
                         var goodid = $scope.findIdByName(goodList[x]);
                         $scope.heroList[goodid].filter = $scope.heroList[goodid].filterprev;
-                        $scope.heroList[goodid].style = ''
+                        $scope.heroList[goodid].style = $scope.style_normal;
                     }
                 }
 
@@ -361,7 +364,7 @@
                     for (var x = 0; x < badList.length; x++) {
                         var badid = $scope.findIdByName(badList[x]);
                         $scope.heroList[badid].filter = $scope.heroList[badid].filterprev;
-                        $scope.heroList[badid].style = ''
+                        $scope.heroList[badid].style = $scope.style_normal;
                     }
                 }
                 if ($scope.heroList[id].synergy != '') {
