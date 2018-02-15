@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="content" ng-app="myApp" ng-controller="myCtrl" >
+        <center>
+            <table border="0">
+                <tr>
+                    <td valign="top" align="center" colspan="5">
+                        <input type="submit" ng-click="resetpicks();" value="R E S E T   D R A F T">
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" align="center">
+                        Team A<br><br>
+                        <table border="0" cellpadding="0" cellspacing="0" width="152">
+                            <tbody>
+                                <tr><!-- left side : first ban -->
+                                    <td width="26">&nbsp;</td>
+                                    <td valign="top" height="100" width="100"
+                                        style="border-spacing: 0; background-color:{{leftcolorban1}};">
+                                        <img src="{{imagepath}}{{leftban1}}" height="100" width="100" style="z-index:1;position:absolute;">
+                                        <img src="{{imagepath}}{{leftban1over}}" height="100" width="100" style="z-index:2;position:absolute;">
+                                    </td>
+                                    <td width="26">&nbsp;</td>
+                                </tr>
+                                <tr><td colspan="3" height="30" width="152"></td></tr>
+                                <tr><!-- left side : first pick -->
+                                    <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                        style="border:1px solid #63D1F4;background: url('glory.png');background-repeat:no-repeat;background-color:{{leftcolorpick1}};">
+                                        <img src="{{imagepath}}{{leftpick1}}" height="150" width="150"
+                                             style="margin-bottom: -5px;"/>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="3" height="10" width="152"></td></tr>
+                                <tr><!-- left side : second pick -->
+                                    <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                        style="border:1px solid #63D1F4;background: url('glory.png');background-repeat:no-repeat;background-color:{{leftcolorpick2}};">
+                                        <img src="{{imagepath}}{{leftpick2}}" height="150" width="150"
+                                             style="margin-bottom: -5px"/>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="3" height="10" width="152"></td></tr>
+                                <tr><!-- left side : third pick -->
+                                    <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                        style="border:1px solid #63D1F4;background: url('glory.png');background-repeat:no-repeat;background-color:{{leftcolorpick3}};">
+                                        <img src="{{imagepath}}{{leftpick3}}" height="150" width="150"
+                                             style="margin-bottom: -5px"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <table border="0" cellpadding="1">
+
+                                <tr data-ng-repeat="r in [0,1,2,3,4,5,6,7,8]" >
+                                    <td valign="top" data-ng-repeat="c in [0,1,2,3,4,5]"
+                                        style="border-spacing:0; border-right: 0; background-repeat:no-repeat; border:{{ heroList [r*6 + c].style}};">
+                                        <img src="{{imagepath}}red.gif"
+                                             style="width:100px;height: 100px;z-index: 1; margin-bottom: -103px; margin-left: 0px;"/>
+                                        <img src="{{imagepath}}{{ heroList[r*6 + c].name | lowercase  }}.gif"
+                                             ng-click="pickmeById ( r*6 + c );"
+                                             ng-mouseenter = "checkById ( r*6 + c )"
+                                             ng-mouseleave = "doneById ( r*6 + c )"
+                                             style="width: 98px; height: 98px;z-index: 2;
+                                                    margin-bottom: -1px; margin-left: 1px;
+                                                    filter:{{ heroList [ r*6 + c ].filter }};
+                                            /*        filter: {{heroList[r*5 + c].selected ? 'brightness(20%)' : 'brightness(100%)';}};*/
+                                        "/>
+                                    </td>
+                                </tr>
+
+                        </table>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td valign="top" align="center">
+                        Team B<br><br>
+                        <table border="0" cellpadding="0" cellspacing="0" width="152">
+                            <tbody>
+                            <tr><!-- right side : first ban -->
+                                <td width="26">&nbsp;</td>
+                                <td valign="top" height="100" width="100"
+                                    style="border-spacing: 0; background: url('glory100.png');background-repeat:no-repeat;background-color:{{rightcolorban1}};">
+                                    <img src="{{imagepath}}{{rightban1}}" height="100" width="100" style="z-index:1;position:absolute;">
+                                    <img src="{{imagepath}}{{rightban1over}}" height="100" width="100" style="z-index:2;position:absolute;">
+                                </td>
+                                <td width="26">&nbsp;</td>
+                            </tr>
+                            <tr><td colspan="3" height="30" width="152"></td></tr>
+                            <tr><!-- right side : first pick -->
+                                <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                    style="border:1px solid #FBA16C;background: url('glory.png');background-repeat:no-repeat;background-color:{{rightcolorpick1}};">
+                                    <img src="{{imagepath}}{{rightpick1}}" height="150" width="150"
+                                         style="margin-bottom: -5px"/>
+                                </td>
+                            </tr>
+                            <tr><td colspan="3" height="10" width="152"></td></tr>
+                            <tr><!-- right side : second pick -->
+                                <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                    style="border:1px solid #FBA16C;background: url('glory.png');background-repeat:no-repeat;background-color:{{rightcolorpick2}};">
+                                    <img src="{{imagepath}}{{rightpick2}}" height="150" width="150"
+                                         style="margin-bottom: -5px"/>
+                                </td>
+                            </tr>
+                            <tr><td colspan="3" height="10" width="152"></td></tr>
+                            <tr><!-- right side : third pick -->
+                                <td valign="top" height="152" width="152" bgcolor="#cfcfcf" colspan="3"
+                                    style="border:1px solid #FBA16C;background: url('glory.png');background-repeat:no-repeat;background-color:{{rightcolorpick3}};">
+                                    <img src="{{imagepath}}{{rightpick3}}" height="150" width="150"
+                                         style="margin-bottom: -5px"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.imagepath = "images\\";
+
+
+            $scope.filtersynergy = "contrast(80%) sepia(70%) hue-rotate(170deg)";
+            $scope.filtergoodagainst = "contrast(80%) sepia(70%) hue-rotate(90deg)";
+            $scope.filterbadagainst = "contrast(80%) sepia(70%) hue-rotate(280deg)";
+            $scope.filternormal = "brightness(100%)";
+            $scope.filterselected = "brightness(20%)";
+
+            $scope.style_badagainst = "1px solid red";
+            $scope.style_goodagainst = "1px solid green";
+            $scope.style_normal = "1px transparent";
+
+
+
+            $scope.heroNames = [
+                "Adagio", "Alpha", "Ardan", "Baptiste",
+                "Baron", "Blackfeather", "Catherine", "Celeste",
+                "Flicker", "Fortress", "Glaive", "Grumpjaw",
+                "Gwen", "Idris", "Joule", "Kestrel",
+                "Koshka", "Krul", "Lance", "Lyra",
+                "Ozo", "Petal", "Phinn", "Ringo",
+                "Reim", "Rona", "Samuel", "Saw",
+                "Skaarf", "Skye", "Taka", "Vox"
+            ];
+            $scope.findIdByName = function (name) {
+                for (x = 0 ; x < $scope.heroNames.length ; x++) {
+                    if ($scope.heroNames[x].trim().toLowerCase() == name.trim().toLowerCase()) return x;
+                }
+                return -1;
+            }
+
+            $scope.heroList = [
+                {name:'Adagio',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Lyra,Vox', bad:'Blackfeather,Catherine,Glaive,Taka', synergy:'Lyra'},
+                {name:'Alpha',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Blackfeather,Glaive,Gwen,Idris,Taka', bad:'Catherine,Krul,Lance,Lyra,Petal,Reim,Rona', synergy:''},
+                {name:'Ardan',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Baron,Gwen,Ozo,Skye', bad:'Blackfeather,Koshka,Lyra,Taka', synergy:''},
+                {name:'Baptiste',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'', bad:'', synergy:''},
+                {name:'Baron',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'', bad:'Ardan,Taka,Idris,Blackfeather,Koshka', synergy:''},
+                {name:'Blackfeather',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Adagio,Ardan,Baron,Celeste,Gwen,Joule,', bad:'Krul,Lyra,Petal,Rona,Skye', synergy:''},
+                {name:'Catherine',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Adagio,Alpha,Fortress,Joule,Kestrel,Koshka,Ozo,Samuel,Skaarf', bad:'Petal,Skye', synergy:''},
+                {name:'Celeste',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Flicker,Kestrel,Lyra,Samuel,Saw', bad:'Blackfeather,Glaive,Gwen,Idris,Koshka,Skye', synergy:''},
+                {name:'Flicker',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'', bad:'Celeste,Glaive,Gwen,Koshka,Petal,Phinn', synergy:''},
+                {name:'Fortress',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Adagio,Kestrel,Lyra,Samuel,Taka', bad:'Catherine,Koshka,Lance,Ozo,Petal', synergy:'Koshka'},
+                {name:'Glaive',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Adagio,Celeste,Flicker,Kestrel,Saw,Skaarf,Taka', bad:'Alpha,Krul,Lance,Reim', synergy:'Fortress'},
+                {name:'Grumpjaw',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'', bad:'Lyra,Petal,Phinn,Skye,Taka', synergy:'Fortress,Koshka'},
+                {name:'Gwen',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Celeste,Flicker,Kestrel,Phinn,Taka,Vox', bad:'Alpha,Ardan,Blackfeather,Krul', synergy:''},
+                {name:'Idris',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Baron,Celeste', bad:'Alpha,Krul,Lyra,Rona', synergy:''},
+                {name:'Joule',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Petal,Saw', bad:'Blackfeather,Catherine,Skye,Taka', synergy:''},
+                {name:'Kestrel',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Phinn,Saw', bad:'Catherine,Celeste,Fortress,Glaive,Gwen,Petal', synergy:''},
+                {name:'Koshka',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Ardan,Baron,Celeste,Flicker,Fortress,Samuel,Skye,Taka,Vox', bad:'Lance,Lyra,Phinn', synergy:'Fortress'},
+                {name:'Krul',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Blackfeather,Glaive,Gwen,Idris,Ozo,Phinn', bad:'Lance,Petal,Samuel,Skye', synergy:''},
+                {name:'Lance',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Fortress,Glaive,Koshka,Krul,Ozo,Petal,Saw,Taka', bad:'Lyra,Phinn,Skye,Vox', synergy:''},
+                {name:'Lyra',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Ardan,Blackfeather,Grumpjaw,Idris,Koshka,Lance,Ozo,Taka', bad:'Adagio,Celeste,Fortress,Skaarf', synergy:'Adagio'},
+                {name:'Ozo',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Fortress', bad:'Ardan,Catherine,Krul,Lance,Lyra,Phinn', synergy:''},
+                {name:'Petal',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Blackfeather,Catherine,Flicker,Fortress,Grumpjaw,Kestrel,Krul,Phinn,Samuel,Skye,Taka', bad:'Joule,Lance,Skaarf,Vox', synergy:''},
+                {name:'Phinn',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Flicker,Grumpjaw,Koshka,Lance,Ozo,Taka', bad:'Gwen,Kestrel,Krul,Petal,Ringo,Rona,Skaarf,Skye,Vox', synergy:''},
+                {name:'Ringo',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Phinn,Skye', bad:'', synergy:''},
+                {name:'Reim',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Glaive,Saw', bad:'Skye', synergy:''},
+                {name:'Rona',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Alpha,Blackfeather,Idris,Joule,Phinn,Saw', bad:'', synergy:''},
+                {name:'Samuel',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Krul,Skaarf,Vox', bad:'Catherine,Celeste,Fortress,Koshka,Petal', synergy:''},
+                {name:'Saw',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'', bad:'Celeste,Glaive,Joule,Kestrel,Lance,Reim,Rona', synergy:''},
+                {name:'Skaarf',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Lyra,Petal,Phinn', bad:'Catherine,Glaive,Samuel,Skye', synergy:'Ardan'},
+                {name:'Skye',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Blackfeather,Catherine,Celeste,Grumpjaw,Joule,Krul,Lance,Reim,Skaarf', bad:'Ardan,Koshka,Petal,Ringo,Taka', synergy:''},
+                {name:'Taka',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Adagio,Ardan,Baron,Grumpjaw,Joule,Skye', bad:'Alpha,Fortress,Glaive,Gwen,Koshka,Lance,Lyra,Petal,Phinn', synergy:''},
+                {name:'Vox',selected:false, filter:$scope.filternormal, filterprev:'', style:$scope.style_normal, good:'Lance,Petal,Phinn', bad:'Adagio,Gwen,Koshka,Samuel', synergy:''},
+
+            ];
+
+
+
+            $scope.blueban = "blueban.png";
+            $scope.redban = "orangeban.png";
+
+            $scope.graycolor = "rgba(50,50,50, 0.5)";
+            $scope.redcolor = "rgba(251,161,108, 0.5)";
+            $scope.bluecolor = "rgba(99,209,244, 0.5)";
+
+            $scope.leftban1 = "glory100.png";
+            $scope.leftbanover = "";
+            $scope.rightban1 = "glory100.png";
+            $scope.rightbanover = "";
+
+            $scope.leftpick1 = "glory.png";
+            $scope.leftpick2 = "glory.png";
+            $scope.leftpick3 = "glory.png";
+
+            $scope.rightpick1 = "glory.png";
+            $scope.rightpick2 = "glory.png";
+            $scope.rightpick3 = "glory.png";
+
+            $scope.leftcolorban1 = $scope.bluecolor;
+            $scope.leftcolorpick1 = $scope.graycolor;
+            $scope.leftcolorpick2 = $scope.graycolor;
+            $scope.leftcolorpick3 = $scope.graycolor;
+
+            $scope.rightcolorban1 = $scope.graycolor;
+            $scope.rightcolorpick1 = $scope.graycolor;
+            $scope.rightcolorpick2 = $scope.graycolor;
+            $scope.rightcolorpick3 = $scope.graycolor;
+
+
+            $scope.draftstep = 0;
+            $scope.pickme = function (name) {
+                if ($scope.draftstep <= 0) {
+                    $scope.leftban1 = name + '.gif';
+                    $scope.leftban1over = $scope.blueban;
+                    $scope.draftstep = 1;
+                    $scope.rightcolorban1 = $scope.redcolor;
+                } else if ($scope.draftstep <= 1) {
+                    $scope.rightban1 = name + '.gif';
+                    $scope.rightban1over = $scope.redban;
+                    $scope.draftstep = 2;
+                    $scope.leftcolorpick1 = $scope.bluecolor;
+                } else if ($scope.draftstep <= 2) {
+                    $scope.leftpick1 = name + '.gif';
+                    $scope.draftstep = 3;
+                    $scope.rightcolorpick1 = $scope.redcolor;
+                } else if ($scope.draftstep <= 3) {
+                    $scope.rightpick1 = name + '.gif';
+                    $scope.draftstep = 4;
+                    $scope.rightcolorpick2 = $scope.redcolor;
+                } else if ($scope.draftstep <= 4) {
+                    $scope.rightpick2 = name + '.gif';
+                    $scope.draftstep = 5;
+                    $scope.leftcolorpick2 = $scope.bluecolor;
+                } else if ($scope.draftstep <= 5) {
+                    $scope.leftpick2 = name + '.gif';
+                    $scope.draftstep = 6;
+                    $scope.leftcolorpick3 = $scope.bluecolor;
+                } else if ($scope.draftstep <= 6) {
+                    $scope.leftpick3 = name + '.gif';
+                    $scope.draftstep = 7;
+                    $scope.rightcolorpick3 = $scope.redcolor;
+                } else if ($scope.draftstep <= 7) {
+                    $scope.rightpick3 = name + '.gif';
+                    $scope.draftstep = 8;
+                }
+                return 0;
+            }
+            $scope.pickmeById = function (id) {
+
+                if ($scope.heroList[id].selected == false && $scope.draftstep <= 7) {
+                    $scope.pickme ($scope.heroList[id].name);
+                    $scope.heroList[id].selected = true;
+                    $scope.heroList[id].filter = $scope.filterselected;
+                } else {
+                }
+
+                return 0;
+            }
+
+            $scope.resetpicks = function() {
+                $scope.draftstep = 0;
+                for (x = 0; x < $scope.heroList.length; x++) {
+                    $scope.heroList[x].selected = false;
+                    $scope.heroList[x].filter = $scope.filternormal;
+                }
+
+                $scope.leftban1 = "glory100.png";
+                $scope.leftban1over = "";
+                $scope.rightban1 = "glory100.png";
+                $scope.rightban1over = "";
+
+                $scope.leftpick1 = "glory.png";
+                $scope.leftpick2 = "glory.png";
+                $scope.leftpick3 = "glory.png";
+
+                $scope.rightpick1 = "glory.png";
+                $scope.rightpick2 = "glory.png";
+                $scope.rightpick3 = "glory.png";
+
+                $scope.leftcolorban1 = $scope.bluecolor;
+                $scope.leftcolorpick1 = $scope.graycolor;
+                $scope.leftcolorpick2 = $scope.graycolor;
+                $scope.leftcolorpick3 = $scope.graycolor;
+
+                $scope.rightcolorban1 = $scope.graycolor;
+                $scope.rightcolorpick1 = $scope.graycolor;
+                $scope.rightcolorpick2 = $scope.graycolor;
+                $scope.rightcolorpick3 = $scope.graycolor;
+            }
+
+            $scope.checkById = function(id) {
+                if ($scope.heroList[id].selected == true) return;
+                $scope.heroList[id].filterprev = $scope.heroList[id].filter; //save prev value first
+                $scope.heroList[id].filter = $scope.filtersynergy;
+
+                if ($scope.heroList[id].good != '') {
+                    var goodList = $scope.heroList[id].good.split(",");
+                    for (var x = 0; x < goodList.length; x++) {
+                        var goodid = $scope.findIdByName(goodList[x]);
+                        $scope.heroList[goodid].filterprev = $scope.heroList[goodid].filter; //save prev value first
+                        $scope.heroList[goodid].filter = $scope.filtergoodagainst;
+                        $scope.heroList[goodid].style = $scope.style_goodagainst;
+                    }
+                }
+
+                if ($scope.heroList[id].bad != '') {
+                    var badList = $scope.heroList[id].bad.split(",");
+                    for (var x = 0; x < badList.length; x++) {
+                        var badid = $scope.findIdByName(badList[x]);
+                        $scope.heroList[badid].filterprev = $scope.heroList[badid].filter; //save prev value first
+                        $scope.heroList[badid].filter = $scope.filterbadagainst;
+                        $scope.heroList[badid].style = $scope.style_badagainst;
+                    }
+                }
+                if ($scope.heroList[id].synergy != '') {
+                    var synList = $scope.heroList[id].synergy.split(",");
+                    for (var x = 0; x < synList.length; x++) {
+                        var synid = $scope.findIdByName(synList[x]);
+                        $scope.heroList[synid].filterprev = $scope.heroList[synid].filter; //save prev value first
+                        $scope.heroList[synid].filter = $scope.filtersynergy;
+                    }
+                }
+            }
+            $scope.doneById = function(id) {
+                if ($scope.heroList[id].selected == false)
+                    $scope.heroList[id].filter = $scope.heroList[id].filterprev;
+
+                if ($scope.heroList[id].good != '') {
+                    var goodList = $scope.heroList[id].good.split(",");
+                    for (var x = 0; x < goodList.length; x++) {
+                        var goodid = $scope.findIdByName(goodList[x]);
+                        $scope.heroList[goodid].filter = $scope.heroList[goodid].filterprev;
+                        $scope.heroList[goodid].style = ''
+                    }
+                }
+
+                if ($scope.heroList[id].bad != '') {
+                    var badList = $scope.heroList[id].bad.split(",");
+                    for (var x = 0; x < badList.length; x++) {
+                        var badid = $scope.findIdByName(badList[x]);
+                        $scope.heroList[badid].filter = $scope.heroList[badid].filterprev;
+                        $scope.heroList[badid].style = ''
+                    }
+                }
+                if ($scope.heroList[id].synergy != '') {
+                    var synList = $scope.heroList[id].synergy.split(",");
+                    for (var x = 0; x < synList.length; x++) {
+                        var synid = $scope.findIdByName(synList[x]);
+                        $scope.heroList[synid].filter = $scope.heroList[synid].filtersynergy;
+                    }
+                }
+
+            }
+
+        });
+    </script>
+
+
+
+</body>
+</html>
